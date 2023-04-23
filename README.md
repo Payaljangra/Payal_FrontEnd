@@ -37,13 +37,13 @@ const WrappedListComponent = ({
 ```
 3.The propTypes declaration for the items prop of the WrappedListComponent is incorrect, also shapeof property doesn’t exists.
 The correct code is - 
-'''
+```
 WrappedListComponent.propTypes = {
   items: PropTypes.arrayOf(PropTypes.shape({
     text: PropTypes.string.isRequired,
   })),
 };
-'''
+```
 No more warnings.....
 
 
