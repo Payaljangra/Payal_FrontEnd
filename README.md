@@ -2,7 +2,49 @@ Q.1 Explain what the simple List component does.
 Ans. This React List Component displays a list of items, it simply receives an array of 'items' where each item containing a text property. The SingleListItem component present in the code renders the single item in the list as an li element. The isSelected prop determines whether the item is selected or not, and onClickHandler will handle the list whenever any item present in the list is clicked on. The SingleListItem component can be selected by clicking on it. When the item is selected , its background color changes from red to green. 
 
 Q.2 What problems / warnings are there with code?
-Ans. 
+Ans. 1. In the 'WrappedSinglelistItem' function, when any user click on the list then onClick event occurs and calls the function onClickHandler.But the onClickHandler() function called instead of function call.The solution of the problem is that use the callback function to avoid unneccessary rendering.
+Code with error--
+```
+ <li
+      style={{ backgroundColor: isSelected ? 'green' : 'red'}}
+      onClick={onClickHandler(index)}
+    >
+      {text}
+    </li>
+```
+
+Code after removing errors--
+```
+<li
+      style={{ backgroundColor: isSelected ? 'green' : 'red'}}
+      onClick={()=>onClickHandler(index)}
+    >
+      {text}
+    </li>
+```
+2. We mistakenly defining 'setSelectedIndex' as first arg and thinking that this is the dispatcher but infact it is the value and the second arg is  actually the dispatcher.
+ 
+ Updated component-
+```
+const WrappedListComponent = ({
+  items,
+}) => {
+  const [selectedIndex,setSelectedIndex] = useState();
+
+  useEffect(() => {
+    setSelectedIndex(null);
+  }, [items]);
+```
+3.The propTypes declaration for the items prop of the WrappedListComponent is incorrect, also shapeof property doesn’t exists.
+The correct code is - 
+'''
+WrappedListComponent.propTypes = {
+  items: PropTypes.arrayOf(PropTypes.shape({
+    text: PropTypes.string.isRequired,
+  })),
+};
+'''
+No more warnings.....
 
 
 Q.3 Please fix, optimize, and/or modify the component as much as you think is necessary.
